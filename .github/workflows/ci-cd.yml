@@ -40,3 +40,4 @@ jobs:
         run: |
           docker push ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:latest
           docker push ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:${{ github.sha }}
+
