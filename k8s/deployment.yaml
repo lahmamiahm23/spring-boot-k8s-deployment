@@ -1,7 +1,9 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-boot-app
+  labels:
+    app: spring-boot-app
 spec:
   replicas: 1
   selector:
@@ -12,9 +14,23 @@ spec:
       labels:
         app: spring-boot-app
     spec:
+      imagePullSecrets:
+        - name: ghcr-secret   # 🔐 permet à K8s de s'authentifier sur GHCR
       containers:
-      - name: app
-        image: ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:latest
-        ports:
-        - containerPort: 8080
-
+        - name: app
+          image: ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:latest
+          ports:
+            - containerPort: 8080
+          # 🔍 Vérifications de santé (facultatives mais recommandées)
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
