@@ -30,12 +30,13 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: lahmamiahm23
+          username: med293475-sketch
           password: "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"
 
       - name: Push to GHCR
         run: |
           docker push ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:latest
           docker push ghcr.io/lahmamiahm23/spring-boot-k8s-deployment:${{ github.sha }}
+
 
 
